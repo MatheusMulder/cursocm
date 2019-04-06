@@ -15,6 +15,12 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	
+
+	public Category() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Category(Integer id, String name) {
 		super();
