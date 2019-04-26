@@ -7,14 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.redlum.coursecm.model.Category;
 import com.redlum.coursecm.repositories.CategoryRepository;
+import com.redlum.service.exceptions.ObjectNotFoundException;
+
 
 @Service
 public class CategoryService {
 
 	@Autowired
 	private CategoryRepository repo;
-	public Category find(Integer id) {
+	public Category find(Integer id)   {
 		Optional<Category> obj = repo.findById(id);
-		return obj.orElse(null);
+			return obj.orElseThrow(() -> new ObjectNotFoundException( "Object not found with id: " + 
+														id + ", tipo: " + Category.class.getName()));
+
 	}
 }

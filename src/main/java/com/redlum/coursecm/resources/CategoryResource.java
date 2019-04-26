@@ -10,18 +10,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.redlum.coursecm.model.Category;
 import com.redlum.coursecm.services.CategoryService;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryResource {
 
 	@Autowired
 	private CategoryService cs;
-	
-	@RequestMapping(value="/{id}" , method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable Integer id) {
 		Category obj = cs.find(id);
-		
 		return ResponseEntity.ok().body(obj);
+
 	}
 }
