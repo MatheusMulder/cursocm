@@ -20,18 +20,18 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	
-	@JsonManagedReference //This annotation mark the data will be loaded in this site (Categories have the products)
-	@ManyToMany(mappedBy="categories")
+
+	@JsonManagedReference // This annotation mark the data will be loaded in this site (Categories have
+							// the products)
+	@ManyToMany(mappedBy = "categories")
 	private List<Product> products = new ArrayList<>();
 
 	public Category() {
-		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public Category(Integer id, String name) {
-		super();
+
 		this.id = id;
 		this.name = name;
 	}

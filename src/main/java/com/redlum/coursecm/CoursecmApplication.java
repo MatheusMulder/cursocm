@@ -8,9 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.redlum.coursecm.model.Category;
+import com.redlum.coursecm.model.City;
 import com.redlum.coursecm.model.Product;
+import com.redlum.coursecm.model.State;
 import com.redlum.coursecm.repositories.CategoryRepository;
+import com.redlum.coursecm.repositories.CityRepository;
 import com.redlum.coursecm.repositories.ProductRepository;
+import com.redlum.coursecm.repositories.StateRepository;
 
 @SpringBootApplication
 public class CoursecmApplication implements CommandLineRunner {
@@ -20,6 +24,14 @@ public class CoursecmApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository pr;
+	
+	@Autowired
+	private StateRepository sr;
+	
+	
+	@Autowired
+	private CityRepository cityr;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CoursecmApplication.class, args);
@@ -44,6 +56,20 @@ public class CoursecmApplication implements CommandLineRunner {
 		
 		cr.saveAll(Arrays.asList(cat1, cat2));
 		pr.saveAll(Arrays.asList(p1, p2, p3));
+		
+		
+		State e1 = new State(null, "Minas Gerais");
+		State e2 = new State(null,"São Paulo");
+		
+		City c1 = new City(null, "Uberlândia", e1);
+		City c2 = new City(null, "São Paulo", e2);
+		City c3 = new City(null, "Campinas", e2);
+		
+		e1.getCities().addAll(Arrays.asList(c1));
+		e2.getCities().addAll(Arrays.asList(c2, c3));	
+		
+		sr.saveAll(Arrays.asList(e1, e2));
+		cityr.saveAll(Arrays.asList(c1,c2,c3));
 		
 	}
 
