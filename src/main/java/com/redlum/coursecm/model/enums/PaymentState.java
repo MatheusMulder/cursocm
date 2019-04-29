@@ -1,13 +1,13 @@
 package com.redlum.coursecm.model.enums;
 
-public enum CustomerType {
+public enum PaymentState {
 
-	PF(1, "PF"), PJ(2, "PJ");
+	PENDENTE(1, "P"), QUITADO(2, "Q"), CANCELADO(3, "C");
 
 	private Integer id;
 	private String description;
 
-	private CustomerType(Integer id, String description) {
+	private PaymentState(Integer id, String description) {
 		this.id = id;
 		this.description = description;
 	}
@@ -20,12 +20,12 @@ public enum CustomerType {
 		return description;
 	}
 
-	public static CustomerType toEnum(Integer id) {
+	public static PaymentState toEnum(Integer id) {
 		if (id == null) {
 			return null;
 		}
 
-		for (CustomerType ct : CustomerType.values()) {
+		for (PaymentState ct : PaymentState.values()) {
 			if (ct.getId().equals(id)) {
 				return ct;
 			}

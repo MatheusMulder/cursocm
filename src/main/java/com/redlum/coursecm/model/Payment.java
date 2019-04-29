@@ -1,36 +1,36 @@
 package com.redlum.coursecm.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.redlum.coursecm.model.enums.PaymentState;
 
 @Entity
-public class State implements Serializable {
+public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
+	private PaymentState state;
 
-	@JsonBackReference
-	@OneToMany(mappedBy = "state")
-	private List<City> cities = new ArrayList<>();
+	@OneToOne
+	private Order order;
 
-	public State() {
+	public Payment() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public State(Integer id, String name) {
+	public Payment(Integer id, PaymentState state, Order order) {
+		super();
 		this.id = id;
-		this.name = name;
+		this.state = state;
+		this.order = order;
 	}
 
 	public Integer getId() {
@@ -41,20 +41,20 @@ public class State implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public PaymentState getState() {
+		return state;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setState(PaymentState state) {
+		this.state = state;
 	}
 
-	public List<City> getCities() {
-		return cities;
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setCities(List<City> cities) {
-		this.cities = cities;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class State implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		State other = (State) obj;
+		Payment other = (Payment) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -84,7 +84,7 @@ public class State implements Serializable {
 
 	@Override
 	public String toString() {
-		return "State [id=" + id + ", name=" + name + "]";
+		return "Payment [id=" + id + ", state=" + state + ", order=" + order + "]";
 	}
 
 }

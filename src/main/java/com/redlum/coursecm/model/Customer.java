@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.redlum.coursecm.model.enums.CustomerType;
 
 @Entity
@@ -28,18 +29,23 @@ public class Customer implements Serializable {
 	private String legalCode;
 	private Integer type;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "customer")
 	private List<Address> adresses = new ArrayList<>();
 
 	@ElementCollection
-	@CollectionTable(name="PHONE_NUMBERS")
+	@CollectionTable(name = "PHONE_NUMBERS")
 	private Set<String> phoneNumbers = new HashSet<>();
+
+	@JsonManagedReference
+	@OneToMany(mappedBy = "customer")
+	private List<Order> orders = new ArrayList<>();
 
 	public Customer() {
 
 	}
 
-	public Customer(Integer id, String name, String email, String legalCode,  CustomerType type) {
+	public Customer(Integer id, String name, String email, String legalCode, CustomerType type) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -103,6 +109,14 @@ public class Customer implements Serializable {
 		this.phoneNumbers = phoneNumbers;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,10 +144,8 @@ public class Customer implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", legalCode=" + legalCode + ", type=" + type
-				+ ", adresses=" + adresses + ", phoneNumbers=" + phoneNumbers + "]";
+		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", legalCode=" + legalCode + ", type="
+				+ type + ", adresses=" + adresses + ", phoneNumbers=" + phoneNumbers + "]";
 	}
-
-
 
 }

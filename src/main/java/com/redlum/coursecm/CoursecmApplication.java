@@ -78,7 +78,7 @@ public class CoursecmApplication implements CommandLineRunner {
 		sr.saveAll(Arrays.asList(e1, e2));
 		cityr.saveAll(Arrays.asList(c1, c2, c3));
 
-		Customer cust1 = new Customer(null, "Maria Silva", "maria@gmail.com", "10139480900", CustomerType.PESSOAFISICA);
+		Customer cust1 = new Customer(null, "Maria Silva", "maria@gmail.com", "10139480900", CustomerType.PF);
 		cust1.getPhoneNumbers().addAll(Arrays.asList("2333444", "1344422"));
 
 		Address ad1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cust1, c1);
