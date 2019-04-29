@@ -4,17 +4,17 @@ import java.util.Date;
 
 import com.redlum.coursecm.model.enums.PaymentState;
 
-public class PaymentBillet extends Payment {
+public class BilletPayment extends Payment {
 	private static final long serialVersionUID = 1L;
 
 	private Date paymentDate;
 	private Date dueDate;
 
-	public PaymentBillet() {
+	public BilletPayment() {
 
 	}
 
-	public PaymentBillet(Integer id, PaymentState state, Order order, Date paymentDate, Date dueDate) {
+	public BilletPayment(Integer id, PaymentState state, Order order, Date paymentDate, Date dueDate) {
 		super(id, state, order);
 		this.paymentDate = paymentDate;
 		this.dueDate = dueDate;
