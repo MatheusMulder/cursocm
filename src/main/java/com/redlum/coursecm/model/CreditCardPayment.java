@@ -1,7 +1,10 @@
 package com.redlum.coursecm.model;
 
+import javax.persistence.Entity;
+
 import com.redlum.coursecm.model.enums.PaymentState;
 
+@Entity
 public class CreditCardPayment extends Payment {
 	private static final long serialVersionUID = 1L;
 	private Integer installments;

@@ -2,8 +2,11 @@ package com.redlum.coursecm.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 import com.redlum.coursecm.model.enums.PaymentState;
 
+@Entity
 public class BilletPayment extends Payment {
 	private static final long serialVersionUID = 1L;
 

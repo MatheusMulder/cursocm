@@ -3,6 +3,7 @@ package com.redlum.coursecm.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-@Entity
+@Entity(name="PURCHASE_ORDER")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -20,7 +21,7 @@ public class Order implements Serializable {
 	private Integer id;
 	private Date orderTime;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "purchaseOrder")
 	private Payment payment;
 
 	@ManyToOne
@@ -28,16 +29,16 @@ public class Order implements Serializable {
 	private Customer customer;
 
 	@ManyToOne
-	@JoinColumn(name = "address_id")
+	@JoinColumn(name = "delivery_address_id")
 	private Address orderAddress;
 
 	public Order() {
+
 	}
 
-	public Order(Integer id, Date orderTime, Payment payment, Customer customer, Address orderAddress) {
+	public Order(Integer id, Date orderTime, Customer customer, Address orderAddress) {
 		this.id = id;
 		this.orderTime = orderTime;
-		this.payment = payment;
 		this.customer = customer;
 		this.orderAddress = orderAddress;
 	}

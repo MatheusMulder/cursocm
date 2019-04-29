@@ -3,34 +3,37 @@ package com.redlum.coursecm.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.redlum.coursecm.model.enums.PaymentState;
 
 @Entity
-public class Payment implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private PaymentState state;
+	private Integer state;
 
 	@OneToOne
-	private Order order;
+	@JoinColumn(name = "payment_id")
+	@MapsId
+	private Order purchaseOrder;
 
 	public Payment() {
-		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public Payment(Integer id, PaymentState state, Order order) {
-		super();
 		this.id = id;
-		this.state = state;
-		this.order = order;
+		this.state = state.getId();
+		this.purchaseOrder = order;
 	}
 
 	public Integer getId() {
@@ -42,19 +45,19 @@ public class Payment implements Serializable {
 	}
 
 	public PaymentState getState() {
-		return state;
+		return PaymentState.toEnum(state);
 	}
 
 	public void setState(PaymentState state) {
-		this.state = state;
+		this.state = state.getId();
 	}
 
 	public Order getOrder() {
-		return order;
+		return purchaseOrder;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrder(Order purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
 	}
 
 	@Override
@@ -84,7 +87,7 @@ public class Payment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Payment [id=" + id + ", state=" + state + ", order=" + order + "]";
+		return "Payment [id=" + id + ", state=" + state + ", purchaseOrder=" + purchaseOrder + "]";
 	}
 
 }

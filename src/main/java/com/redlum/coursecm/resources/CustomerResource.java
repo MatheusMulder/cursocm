@@ -22,5 +22,5 @@ public class CustomerResource {
 		Customer obj = cs.find(id);
 		return ResponseEntity.ok().body(obj);
 
-	}
+	}	
 }

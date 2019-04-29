@@ -1,5 +1,6 @@
 package com.redlum.coursecm;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +9,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.redlum.coursecm.model.Address;
+import com.redlum.coursecm.model.BilletPayment;
 import com.redlum.coursecm.model.Category;
 import com.redlum.coursecm.model.City;
+import com.redlum.coursecm.model.CreditCardPayment;
 import com.redlum.coursecm.model.Customer;
+import com.redlum.coursecm.model.Order;
+import com.redlum.coursecm.model.Payment;
 import com.redlum.coursecm.model.Product;
 import com.redlum.coursecm.model.State;
 import com.redlum.coursecm.model.enums.CustomerType;
+import com.redlum.coursecm.model.enums.PaymentState;
 import com.redlum.coursecm.repositories.AddressRepository;
 import com.redlum.coursecm.repositories.CategoryRepository;
 import com.redlum.coursecm.repositories.CityRepository;
 import com.redlum.coursecm.repositories.CustomerRepository;
+import com.redlum.coursecm.repositories.OrderRepository;
+import com.redlum.coursecm.repositories.PaymentRepository;
 import com.redlum.coursecm.repositories.ProductRepository;
 import com.redlum.coursecm.repositories.StateRepository;
 
@@ -41,6 +49,12 @@ public class CoursecmApplication implements CommandLineRunner {
 
 	@Autowired
 	private AddressRepository addrr;
+
+	@Autowired
+	private OrderRepository orderr;
+
+	@Autowired
+	private PaymentRepository payr;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CoursecmApplication.class, args);
@@ -86,6 +100,22 @@ public class CoursecmApplication implements CommandLineRunner {
 
 		custr.saveAll(Arrays.asList(cust1));
 		addrr.saveAll(Arrays.asList(ad1, ad2));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Order o1 = new Order(null, sdf.parse("30/09/2017 10:32"), cust1, ad1);
+		Order o2 = new Order(null, sdf.parse("10/10/2017 19:35"), cust1, ad2);
+
+		Payment pay1 = new CreditCardPayment(null, PaymentState.QUITADO, o1, 6);
+		o1.setPayment(pay1);
+
+		Payment pay2 = new BilletPayment(null, PaymentState.PENDENTE, o2, sdf.parse("20/10/2017 00:00"), null);
+		o2.setPayment(pay2);
+
+		cust1.getpurchaseOrders().addAll(Arrays.asList(o1, o2));
+
+		orderr.saveAll(Arrays.asList(o1, o2));
+		payr.saveAll(Arrays.asList(pay1, pay2));
 
 	}
 
