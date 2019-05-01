@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -28,7 +27,7 @@ public class Product implements Serializable {
 	private String name;
 	private Double price;
 
-	@JsonBackReference // This flag the other side was marked and will bring all the data. So the
+	@JsonIgnore // This flag the other side was marked and will bring all the data. So the
 						// product doesnt gonna have the category infos.
 	@ManyToMany
 	@JoinTable(name = "PRODUCT_CATEGORY", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))

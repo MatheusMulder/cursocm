@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.redlum.coursecm.model.enums.PaymentState;
 
@@ -23,7 +22,7 @@ public abstract class Payment implements Serializable {
 	private Integer id;
 	private Integer state;
 
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "payment_id")
 	@MapsId
