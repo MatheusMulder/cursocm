@@ -21,4 +21,9 @@ public class CategoryService {
 														id + ", tipo: " + Category.class.getName()));
 
 	}
+	
+		public Category insert(Category obj) {
+			obj.setId(null);
+			return repo.save(obj);
+		}
 }
