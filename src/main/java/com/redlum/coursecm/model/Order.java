@@ -15,24 +15,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-@Entity(name = "PURCHASE_ORDER")
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity(name="PURCHASE_ORDER")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date orderTime;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "purchaseOrder")
+	@JsonManagedReference
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="purchaseOrder")
 	private Payment payment;
 
+	@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name = "customer_id")
+	@JoinColumn(name="customer_id")
 	private Customer customer;
 
 	@ManyToOne
-	@JoinColumn(name = "delivery_address_id")
+	@JoinColumn(name="delivery_address_id")
 	private Address orderAddress;
 
 	@OneToMany(mappedBy = "id.order")
