@@ -15,6 +15,7 @@ import com.redlum.coursecm.model.City;
 import com.redlum.coursecm.model.CreditCardPayment;
 import com.redlum.coursecm.model.Customer;
 import com.redlum.coursecm.model.Order;
+import com.redlum.coursecm.model.OrderItem;
 import com.redlum.coursecm.model.Payment;
 import com.redlum.coursecm.model.Product;
 import com.redlum.coursecm.model.State;
@@ -24,6 +25,7 @@ import com.redlum.coursecm.repositories.AddressRepository;
 import com.redlum.coursecm.repositories.CategoryRepository;
 import com.redlum.coursecm.repositories.CityRepository;
 import com.redlum.coursecm.repositories.CustomerRepository;
+import com.redlum.coursecm.repositories.OrderItemRepository;
 import com.redlum.coursecm.repositories.OrderRepository;
 import com.redlum.coursecm.repositories.PaymentRepository;
 import com.redlum.coursecm.repositories.ProductRepository;
@@ -55,6 +57,9 @@ public class CoursecmApplication implements CommandLineRunner {
 
 	@Autowired
 	private PaymentRepository payr;
+
+	@Autowired
+	private OrderItemRepository oir;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CoursecmApplication.class, args);
@@ -117,6 +122,18 @@ public class CoursecmApplication implements CommandLineRunner {
 		orderr.saveAll(Arrays.asList(o1, o2));
 		payr.saveAll(Arrays.asList(pay1, pay2));
 
+		OrderItem oi1 = new OrderItem(o1, p1, 0.00, 1, 2000.00);
+		OrderItem oi2 = new OrderItem(o1, p3, 0.00, 2, 80.00);
+		OrderItem oi3 = new OrderItem(o2, p2, 100.00, 1, 800.00);
+
+		o1.getOrderItens().addAll(Arrays.asList(oi1, oi2));
+		o2.getOrderItens().addAll(Arrays.asList(oi3));
+
+		p1.getOrderItens().addAll(Arrays.asList(oi1));
+		p2.getOrderItens().addAll(Arrays.asList(oi3));
+		p3.getOrderItens().addAll(Arrays.asList(oi2));
+
+		oir.saveAll(Arrays.asList(oi1, oi2, oi3));
 	}
 
 }

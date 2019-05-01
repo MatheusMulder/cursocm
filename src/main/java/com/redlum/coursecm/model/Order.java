@@ -2,6 +2,8 @@ package com.redlum.coursecm.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,9 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-@Entity(name="PURCHASE_ORDER")
+@Entity(name = "PURCHASE_ORDER")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,6 +34,9 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "delivery_address_id")
 	private Address orderAddress;
+
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> orderItens = new HashSet<>();
 
 	public Order() {
 
@@ -81,6 +87,14 @@ public class Order implements Serializable {
 
 	public void setOrderAddress(Address orderAddress) {
 		this.orderAddress = orderAddress;
+	}
+
+	public Set<OrderItem> getOrderItens() {
+		return orderItens;
+	}
+
+	public void setOrderItens(Set<OrderItem> orderItens) {
+		this.orderItens = orderItens;
 	}
 
 	@Override
