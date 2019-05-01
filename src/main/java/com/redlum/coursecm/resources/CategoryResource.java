@@ -29,11 +29,18 @@ public class CategoryResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> inser(@RequestBody Category obj) {
+	public ResponseEntity<Void> insert(@RequestBody Category obj) {
 		obj = cs.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				 .path("/{id}").buildAndExpand(obj.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Category obj){
+		obj.setId(id);
+		obj = cs.update(obj);
+		return ResponseEntity.noContent().build();
 	}
 }
