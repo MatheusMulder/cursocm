@@ -3,6 +3,7 @@ package com.redlum.coursecm.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.redlum.coursecm.model.Category;
@@ -35,5 +36,14 @@ public class CategoryService {
 	
 	private void updateData(Category newObj, Category obj) {
 		newObj.setName(obj.getName());
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+		repo.deleteById(id);
+		}catch(DataIntegrityViolationException e) {
+			throw new com.redlum.service.exceptions.DataIntegrityViolationException("Can't delete category which has products");
+		}
 	}
 }
