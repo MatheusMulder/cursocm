@@ -1,5 +1,6 @@
 package com.redlum.coursecm.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +47,9 @@ public class CategoryService {
 			throw new com.redlum.service.exceptions.DataIntegrityViolationException("Can't delete category which has products");
 		}
 	}
+	
+	public List<Category> findAll() {
+		return repo.findAll();
+	}
+
 }

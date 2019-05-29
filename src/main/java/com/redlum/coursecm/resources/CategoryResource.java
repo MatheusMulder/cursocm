@@ -1,6 +1,8 @@
 package com.redlum.coursecm.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.redlum.coursecm.dto.CategoryDTO;
 import com.redlum.coursecm.model.Category;
 import com.redlum.coursecm.services.CategoryService;
 
@@ -50,4 +53,13 @@ public class CategoryResource {
 		return ResponseEntity.noContent().build();
 
 	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoryDTO>> findAll() {
+		List<Category>  listObj = cs.findAll();
+		List<CategoryDTO> listObjDTO = listObj.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listObjDTO);
+
+	}
+
 }
